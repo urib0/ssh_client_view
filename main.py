@@ -16,9 +16,10 @@ comment_list = [i[:-1] for i in auth_key_list if i[:2] == "#p"]
 # port:hostの辞書を作る
 port_host_dic = {i.split(" ")[0].split(":")[1]:i.split(" ")[1] for i in comment_list if 1 < len(i.split(" "))}
 
-pprint.pprint(port_host_dic)
-
 # listenしているポートのリストを作成
 cmd = 'ss -altn|grep -oE [0-9]{5}'
 port_list = subprocess.Popen(cmd, stdout=subprocess.PIPE,shell=True).communicate()[0].decode("utf-8").split("\n")[:-1]
-print(port_list)
+
+matched_port_list = sorted(set([i for i in port_list if i in port_host_dic.keys()]))
+for i in matched_port_list:
+  print(f"{i}:{port_host_dic[i]}")
