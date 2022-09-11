@@ -18,6 +18,7 @@ port_host_dic = {i.split(" ")[0].split(":")[1]:i.split(" ")[1] for i in comment_
 
 pprint.pprint(port_host_dic)
 
+# listenしているポートのリストを作成
 cmd = 'ss -altn|grep -oE [0-9]{5}'
 port_list = subprocess.Popen(cmd, stdout=subprocess.PIPE,shell=True).communicate()[0].decode("utf-8").split("\n")[:-1]
 print(port_list)
